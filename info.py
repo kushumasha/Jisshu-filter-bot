@@ -18,7 +18,7 @@ def is_enabled(value, default):
 SESSION = environ.get("SESSION", "Media_search")
 API_ID = int(environ.get("API_ID", "14689508"))
 API_HASH = environ.get("API_HASH", "79413cfe2d8cc93ddf1815ef588e80d5")
-BOT_TOKEN = environ.get("BOT_TOKEN", "")
+BOT_TOKEN = environ.get("BOT_TOKEN", "0")
 PORT = environ.get("PORT", "8082")
 
 # Owners
@@ -27,9 +27,9 @@ ADMINS = [
     for admin in environ.get("ADMINS", "5672857559").split()
 ]
 OWNER_USERNAME = environ.get(
-    "OWNER_USERNAME", "Nobita_X_Coder"
+    "OWNER_USERNAME", "Nobita_X_Surya"
 )  # without @ or https://t.me/
-USERNAME = environ.get("USERNAME", "@Nobita_X_Coder")  # ADMIN USERNAME
+USERNAME = environ.get("USERNAME", "@Nobita_X_Surya")  # ADMIN USERNAME
 
 # Database Channel
 CHANNELS = [
@@ -129,17 +129,14 @@ SEASONS = [f"season {i}" for i in range(1, 23)]
 # Pictures And Reaction
 START_IMG = (
     environ.get(
-        "start' <a href="https://freeimage.host/i/FvzvSb2"><img src="https://iili.io/FvzvSb2.md.png" alt="FvzvSb2.md.png" border="0"></a><br /><a target='_blank' href='https://freeimage.host/'>image uploader</a><br /><a href="https://freeimage.host/i/FvvfeTJ"><img src="https://iili.io/FvvfeTJ.md.png" alt="FvvfeTJ.md.png" border="0"></a>
-    )
+        "start' <a href="https://envs.sh/Svx.jpg/IMG20250728580.jpg
 ).split()
-FORCESUB_IMG = environ.get("FORCESUB_IMG", "<a href="https://freeimage.host/i/FvzvSb2"><img src="https://iili.io/FvzvSb2.md.png" alt="FvzvSb2.md.png" border="0"></a><br /><a target='_blank' href='https://freeimage.host/'>image uploader</a><br /><a href="https://freeimage.host/i/FvvfeTJ"><img src="https://iili.io/FvvfeTJ.md.png" alt="FvvfeTJ.md.png" border="0"></a>")
-REFER_PICS = (environ.get("REFER_PICS", "<a href="https://freeimage.host/i/FvzvSb2"><img src="https://iili.io/FvzvSb2.md.png" alt="FvzvSb2.md.png" border="0"></a><br /><a target='_blank' href='https://freeimage.host/'>image uploader</a><br /><a href="https://freeimage.host/i/FvvfeTJ"><img src="https://iili.io/FvvfeTJ.md.png" alt="FvvfeTJ.md.png" border="0"></a>")).split()
+FORCESUB_IMG = environ.get("FORCESUB_IMG", https://envs.sh/Svx.jpg/IMG20250728580.jpg
+REFER_PICS = (environ.get("REFER_PICS",  https://envs.sh/Svx.jpg/IMG20250728580.jpg
 PAYPICS = (
-    environ.get("PAYPICS", "<a href="https://freeimage.host/i/FvzvSb2"><img src="https://iili.io/FvzvSb2.md.png" alt="FvzvSb2.md.png" border="0"></a><br /><a target='_blank' href='https://freeimage.host/'>image uploader</a><br /><a href="https://freeimage.host/i/FvvfeTJ"><img src="https://iili.io/FvvfeTJ.md.png" alt="FvvfeTJ.md.png" border="0"></a>")
-).split()
+    environ.get("PAYPICS", https://envs.sh/Svx.jpg/IMG20250728580.jpg
 SUBSCRIPTION = environ.get(
-    "SUBSCRIPTION", "<a href="https://freeimage.host/i/FvzvSb2"><img src="https://iili.io/FvzvSb2.md.png" alt="FvzvSb2.md.png" border="0"></a><br /><a target='_blank' href='https://freeimage.host/'>image uploader</a><br /><a href="https://freeimage.host/i/FvvfeTJ"><img src="https://iili.io/FvvfeTJ.md.png" alt="FvvfeTJ.md.png" border="0"></a>"
-)
+    "SUBSCRIPTION", https://envs.sh/Svx.jpg/IMG20250728580.jpg
 REACTIONS = ["👀", "😱", "🔥", "😍", "🎉", "🥰", "😇", "⚡"]
 
 
@@ -160,7 +157,7 @@ LONG_IMDB_DESCRIPTION = is_enabled("LONG_IMDB_DESCRIPTION", False)
 PROTECT_CONTENT = is_enabled("PROTECT_CONTENT", False)
 SPELL_CHECK = is_enabled("SPELL_CHECK", True)
 LINK_MODE = is_enabled("LINK_MODE", True)
-TMDB_API_KEY = environ.get("TMDB_API_KEY", "")
+TMDB_API_KEY = environ.get("TMDB_API_KEY", "0")
 
 # Online Streaming And Download
 STREAM_MODE = bool(environ.get("STREAM_MODE", False))  # Set True or Flase
@@ -172,7 +169,7 @@ if "DYNO" in environ:
     ON_HEROKU = True
 else:
     ON_HEROKU = False
-URL = environ.get("FQDN", "")
+URL = environ.get("FQDN", "0")
 
 # Commands
 admin_cmds = [
