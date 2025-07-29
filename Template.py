@@ -8,7 +8,7 @@ class jisshu_template(object):
         "You can report files or videos that contain issues like copyright infringement, +18 content, violence, etc."
     )
 
-    JISSHU_REPORT_LINK = "https://t.me/Jisshu_support"
+    JISSHU_REPORT_LINK = "https://t.me/Nobita_X_Support"
 
     JISSHU_COLOURS = {
         "header": {"background": "#48cffe", "color": "#ffffff"},
