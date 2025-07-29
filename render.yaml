@@ -1,0 +1,76 @@
+# render.yaml
+# This file configures the services for your Jisshu Filter Bot on Render.
+
+services:
+  # -----------------------------------------------------------------
+  # Service 1: The main Telegram Bot (Worker)
+  # This is a background worker that runs your Pyrogram bot.
+  # -----------------------------------------------------------------
+  - type: worker # Use 'worker' for background tasks that don't need a public URL for user traffic.
+    name: jisshu-filter-bot # A name for your bot service.
+    env: python # Specifies the native environment to use.
+    
+    # --- Build Configuration ---
+    # Render will automatically use requirements.txt to install dependencies.
+    buildCommand: "pip install -r requirements.txt"
+    
+    # --- Start Command ---
+    # This command runs after the build is complete to start your bot.
+    startCommand: "python3 bot.py"
+    
+    # --- Environment Variables ---
+    # Set your secrets and configurations here.
+    # It's highly recommended to use Render's "Secret Files" or "Environment Groups" for sensitive data.
+    # For now, you can add them directly for testing, but create an Environment Group for production.
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11 # Specify the Python version you want to use.
+      - key: BOT_TOKEN
+        fromSecret: true # Best practice: Store sensitive values as secrets in Render's dashboard.
+      - key: API_ID
+        fromSecret: true
+      - key: API_HASH
+        fromSecret: true
+      - key: DATABASE_URI
+        fromSecret: true
+      - key: ADMINS
+        value: "5672857559" # Add your admin user ID(s) here, separated by a space.
+      - key: LOG_CHANNEL
+        value: "-100xxxxxxxxxx" # Your log channel ID.
+      - key: AUTH_CHANNEL
+        value: "-100xxxxxxxxxx" # Your force subscribe channel ID.
+      # Add any other required environment variables from your info.py file here.
+      # For example:
+      # - key: SUPPORT_GROUP
+      #   value: "-100xxxxxxxxxx"
+      # - key: OWNER_USERNAME
+      #   value: "YourUsername"
+
+    # --- Health Check (Optional but Recommended) ---
+    # Render's workers don't have a default health check.
+    # If your bot.py exposes a simple web server (using aiohttp as discussed),
+    # you can uncomment the following lines to enable health checks.
+    # This helps Render know if your bot is running correctly.
+    # healthCheck:
+    #   path: / # The path to check (e.g., your root URL).
+    #   port: 8080 # The port your web server is running on (must match PORT env var).
+
+    # --- Auto-Deploy ---
+    # Automatically deploy new changes when you push to your GitHub repository.
+    autoDeploy: true
+
+  # -----------------------------------------------------------------
+  # Service 2: FFmpeg Buildpack (for media processing)
+  # This is not a service but a way to add system dependencies.
+  # Add this as a buildpack in the Render Dashboard UI.
+  # Instructions are provided below.
+  # -----------------------------------------------------------------
+
+
+# --- Databases ---
+# If you want to use Render's own managed MongoDB, you can define it here.
+# This is a great alternative to using MongoDB Atlas.
+# databases:
+#   - name: jisshu-mongo-db
+#     databaseName: JisshuBotDB # The name of the database inside MongoDB.
+#     ipAllowList: [] # Allows access from anywhere. Restrict if needed.
