@@ -5,18 +5,12 @@ from pathlib import Path
 from pyrogram import idle
 import logging
 import logging.config
+from os import environ # <<-- এই লাইনটি যোগ করুন
 
 # Get logging configurations
-logging.config.fileConfig("logging.conf")
+# logging.config.fileConfig("logging.conf") # <-- কমেন্ট আউট করুন
 logging.getLogger().setLevel(logging.INFO)
-logging.getLogger("pyrogram").setLevel(logging.ERROR)
-logging.getLogger("imdbpy").setLevel(logging.ERROR)
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logging.getLogger("aiohttp").setLevel(logging.ERROR)
-logging.getLogger("aiohttp.web").setLevel(logging.ERROR)
-
+# ... (বাকি logging কনফিগারেশন)
 
 from pyrogram import __version__
 from pyrogram.raw.all import layer
@@ -37,7 +31,7 @@ from Jisshu.bot.clients import initialize_clients
 
 ppath = "plugins/*.py"
 files = glob.glob(ppath)
-JisshuBot.start()
+# JisshuBot.start() # <-- এখান থেকে লাইনটি মুছে ফেলুন
 loop = asyncio.get_event_loop()
 
 pyrogram.utils.MIN_CHANNEL_ID = -1009147483647
@@ -46,6 +40,9 @@ pyrogram.utils.MIN_CHANNEL_ID = -1009147483647
 async def Jisshu_start():
     print("\n")
     print("Credit - Telegram @JISSHU_BOTS")
+    
+    await JisshuBot.start() # <-- এখানে যোগ করুন
+    
     bot_info = await JisshuBot.get_me()
     JisshuBot.username = bot_info.username
     await initialize_clients()
@@ -60,8 +57,11 @@ async def Jisshu_start():
             spec.loader.exec_module(load)
             sys.modules["plugins." + plugin_name] = load
             print("JisshuBot Imported => " + plugin_name)
-    if ON_HEROKU:
+
+    # Heroku এবং Render উভয়ের জন্য keep-alive পিং
+    if ON_HEROKU or environ.get("RENDER"):
         asyncio.create_task(ping_server())
+
     b_users, b_chats = await db.get_banned()
     temp.BANNED_USERS = b_users
     temp.BANNED_CHATS = b_chats
@@ -81,12 +81,19 @@ async def Jisshu_start():
     today = date.today()
     now = datetime.now(tz)
     time = now.strftime("%H:%M:%S %p")
-    await JisshuBot.send_message(
-        chat_id=LOG_CHANNEL, text=script.RESTART_TXT.format(me.mention, today, time)
-    )
-    await JisshuBot.send_message(
-        chat_id=SUPPORT_GROUP, text=f"<b>{me.mention} ʀᴇsᴛᴀʀᴛᴇᴅ 🤖</b>"
-    )
+    
+    # এই মেসেজগুলো পাঠাবার আগে নিশ্চিত করুন LOG_CHANNEL, SUPPORT_GROUP আইডি ঠিক আছে এবং বট ওই চ্যানেল/গ্রুপে অ্যাডমিন আছে
+    try:
+        await JisshuBot.send_message(
+            chat_id=LOG_CHANNEL, text=script.RESTART_TXT.format(me.mention, today, time)
+        )
+        if SUPPORT_GROUP:
+            await JisshuBot.send_message(
+                chat_id=SUPPORT_GROUP, text=f"<b>{me.mention} ʀᴇsᴛᴀʀᴛᴇᴅ 🤖</b>"
+            )
+    except Exception as e:
+        logging.warning(f"Unable to send restart message: {e}")
+
     app = web.AppRunner(await web_server())
     await app.setup()
     bind_address = "0.0.0.0"
